@@ -1,0 +1,67 @@
+<!DOCTYPE htlm>
+<html lang="eng">
+  <head>
+    <metacharset="UTF-8">
+      <link rel="stylesheet" href="style.css">
+      <script src="script.js"></script>
+      <title>Learn Morse Code</title>
+  </head>
+ <body>
+   <h1>Morse Code! 👀</h1>
+
+<div class="menu">
+
+  <button onclick="show('translator')">Translator</button>
+  <button onclick="show('alphabet')">Alphabet</button>
+  <button onclick="show('game')">Training</button>
+
+</div>
+
+<!-- TRANSLATOR -->
+<div id="translator" class="section">
+
+  <h2>Translator</h2>
+
+  <textarea id="input" placeholder="Text or Morse"></textarea>
+
+  <br>
+
+  <button onclick="textToMorse()">Text → Morse</button>
+  <button onclick="morseToText()">Morse → Text</button>
+  <button onclick="playMorse()">🔊 Play</button>
+
+  <p id="output"></p>
+
+</div>
+
+<!-- ALPHABET -->
+<div id="alphabet" class="section" style="display:none;">
+
+  <h2>Morse Alphabet</h2>
+  <div id="alphabetList"></div>
+
+</div>
+
+<!-- GAME -->
+<div id="game" class="section" style="display:none;">
+
+  <h2>Training Mode</h2>
+
+  <p>Level: <span id="level">1</span></p>
+  <p>XP: <span id="xp">0</span></p>
+  <div class="bar"><div id="barFill"></div></div>
+
+  <p>Combo 🔥: <span id="combo">0</span></p>
+  <p>Lives ❤️: <span id="lives">3</span></p>
+  <p>Time ⏱️: <span id="time">10</span></p>
+
+  <p id="question"></p>
+
+  <input id="answer" placeholder="Your answer">
+
+  <button onclick="check()">Check</button>
+
+  <p id="result"></p>
+
+</div>
+   </body> 
