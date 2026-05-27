@@ -1,0 +1,75 @@
+body {
+  font-family: Hipster;
+  text-align: center;
+  background: linear-gradient(135deg,#C29EFF,#9EB1FF,#9EE7FF);
+  color: black;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 50px;
+  text-shadow: 0 0 20px cyan;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #9EB1FF;
+  font-weight: bold;
+}
+
+textarea, input {
+  padding: 10px;
+  margin: 10px;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.bar {
+  width: 200px;
+  height: 10px;
+  background: rgba(255,255,255,0.3);
+  margin: auto;
+  border-radius: 10px;
+}
+
+#barFill {
+  height: 100%;
+  width: 0%;
+  background: #C29EFF;
+  border-radius: 10px;
+}
+.letterBox{
+
+  background: rgba(255,255,255,0.1);
+
+  margin: 10px auto;
+
+  padding: 15px;
+
+  width: 220px;
+
+  border-radius: 15px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  font-size: 22px;
+
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.2);
+}
+
+.letterBox:hover{
+
+  transform: scale(1.05);
+
+  background: rgba(255,255,255,0.2);
+}
