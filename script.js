@@ -32,6 +32,12 @@ window.show = function(id){
   document
     .getElementById(id)
     .style.display = "block";
+
+  document
+    .querySelectorAll(".menu button")
+    .forEach(btn => btn.classList.remove("activeButton"));
+
+  event.target.classList.add("activeButton");
 };
 
 // ---------------- TRANSLATOR ----------------
@@ -39,9 +45,10 @@ window.show = function(id){
 window.textToMorse = function(){
 
   const text =
-    document.getElementById("input")
-    .value
-    .toUpperCase();
+    document
+      .getElementById("input")
+      .value
+      .toUpperCase();
 
   const result =
     text
@@ -49,17 +56,19 @@ window.textToMorse = function(){
       .map(c => morse[c] || "/")
       .join(" ");
 
-  document.getElementById("output")
+  document
+    .getElementById("output")
     .textContent = result;
 };
 
 window.morseToText = function(){
 
   const codes =
-    document.getElementById("input")
-    .value
-    .trim()
-    .split(" ");
+    document
+      .getElementById("input")
+      .value
+      .trim()
+      .split(" ");
 
   let result = "";
 
@@ -73,38 +82,22 @@ window.morseToText = function(){
     }
   });
 
-  document.getElementById("output")
+  document
+    .getElementById("output")
     .textContent = result;
 };
 
-// ---------------- ALPHABET ----------------
+// ---------------- SOUND SYSTEM ----------------
 
-const list =
-  document.getElementById("alphabetList");
-
-for(let key in morse){
-
-  list.innerHTML += `
-  
-  <div class="letterBox"
-       onclick="playLetter('${key}')">
-
-    ${key} = ${morse[key]}
-
-  </div>
-  
-  `;
-}
-
-//------------------ SOUND --------------------
- 
-  function beep(ms){
+function beep(ms){
 
   try {
 
     const ctx =
-      new (window.AudioContext ||
-      window.webkitAudioContext)();
+      new (
+        window.AudioContext ||
+        window.webkitAudioContext
+      )();
 
     const osc =
       ctx.createOscillator();
@@ -122,7 +115,7 @@ for(let key in morse){
 
     }, ms);
 
-  } catch(err) {
+  } catch(err){
 
     console.log(err);
   }
@@ -130,26 +123,27 @@ for(let key in morse){
 
 function wait(ms){
 
-  return new Promise(r =>
-    setTimeout(r, ms));
+  return new Promise(resolve =>
+    setTimeout(resolve, ms));
 }
 
 window.playMorse = async function(){
 
   const text =
-    document.getElementById("output")
-    .textContent;
+    document
+      .getElementById("output")
+      .textContent;
 
-  for(let s of text){
+  for(let symbol of text){
 
-    if(s === "."){
+    if(symbol === "."){
 
       beep(100);
 
       await wait(200);
     }
 
-    else if(s === "-"){
+    else if(symbol === "-"){
 
       beep(300);
 
@@ -157,20 +151,23 @@ window.playMorse = async function(){
     }
   }
 };
-  window.playLetter = async function(letter){
+
+// ---------------- PLAY LETTER ----------------
+
+window.playLetter = async function(letter){
 
   const code = morse[letter];
 
-  for(let s of code){
+  for(let symbol of code){
 
-    if(s === "."){
+    if(symbol === "."){
 
       beep(100);
 
       await wait(200);
     }
 
-    else if(s === "-"){
+    else if(symbol === "-"){
 
       beep(300);
 
@@ -178,13 +175,37 @@ window.playMorse = async function(){
     }
   }
 };
-  // ---------------- GAME ----------------
+
+// ---------------- ALPHABET ----------------
+
+const list =
+  document.getElementById("alphabetList");
+
+for(let key in morse){
+
+  list.innerHTML += `
+
+    <div class="letterBox"
+         onclick="playLetter('${key}')">
+
+      ${key} = ${morse[key]}
+
+    </div>
+
+  `;
+}
+
+// ---------------- GAME SYSTEM ----------------
 
 let xp = 0;
 let level = 1;
 let lives = 3;
 let combo = 0;
 let answer = "";
+let timer;
+let time = 20;
+
+// ---------------- RANDOM LETTER ----------------
 
 function randomLetter(){
 
@@ -192,86 +213,237 @@ function randomLetter(){
     Object.keys(morse);
 
   return keys[
-    Math.floor(Math.random() * keys.length)
+    Math.floor(
+      Math.random() * keys.length
+    )
   ];
 }
 
+// ---------------- GENERATE QUESTION ----------------
+
 function generate(){
 
-  let q = "";
+  let question = "";
 
+  // LEVEL 1
   if(level === 1){
 
     answer = randomLetter();
 
-    q = morse[answer];
+    question = morse[answer];
   }
 
+  // LEVEL 2
   else if(level === 2){
 
     answer =
       randomLetter() +
       randomLetter();
 
-    q =
+    question =
       answer
-      .split("")
-      .map(x => morse[x])
-      .join(" / ");
+        .split("")
+        .map(x => morse[x])
+        .join(" / ");
   }
 
-  else {
+  // LEVEL 3
+  else if(level === 3){
 
     answer =
       randomLetter() +
       randomLetter() +
       randomLetter();
 
-    q =
+    question =
       answer
-      .split("")
-      .map(x => morse[x])
-      .join(" / ");
+        .split("")
+        .map(x => morse[x])
+        .join(" / ");
+  }
+
+  // LEVEL 4+
+  else {
+
+    const words = [
+      "HELLO",
+      "WORLD",
+      "MORSE",
+      "CODE",
+      "SPACE",
+      "RADIO",
+      "TRAIN",
+      "SIGNAL",
+      "GAME",
+      "LEVEL"
+    ];
+
+    answer =
+      words[
+        Math.floor(
+          Math.random() * words.length
+        )
+      ];
+
+    question =
+      answer
+        .split("")
+        .map(x => morse[x])
+        .join(" / ");
   }
 
   document
     .getElementById("question")
-    .textContent = q;
+    .textContent = question;
+
+  resetTimer();
 }
+
+// ---------------- TIMER ----------------
+
+function resetTimer(){
+
+  clearInterval(timer);
+
+  time = 20;
+
+  updateTimer();
+
+  timer = setInterval(() => {
+
+    time--;
+
+    updateTimer();
+
+    if(time <= 0){
+
+      lives--;
+
+      combo = 0;
+
+      document
+        .getElementById("result")
+        .textContent =
+          "Too Slow ⏱️";
+
+      beep(80);
+
+      if(lives <= 0){
+
+        gameOver();
+
+      } else {
+
+        generate();
+      }
+
+      updateUI();
+    }
+
+  },1000);
+}
+
+function updateTimer(){
+
+  const timeEl =
+    document.getElementById("time");
+
+  timeEl.textContent = time;
+
+  if(time <= 3){
+
+    timeEl.classList.add("lowTime");
+
+  } else {
+
+    timeEl.classList.remove("lowTime");
+  }
+}
+
+// ---------------- CHECK ANSWER ----------------
 
 window.check = function(){
 
-  const val =
+  const value =
     document
       .getElementById("answer")
       .value
       .trim()
       .toUpperCase();
 
-  if(val === answer){
+  if(value === answer){
 
     xp += 10;
+
     combo++;
+
+    beep(200);
 
     document
       .getElementById("result")
       .textContent =
         "Correct 🎉";
 
+    // LEVEL UP
     if(combo % 3 === 0){
+
       level++;
     }
 
   } else {
 
     lives--;
+
     combo = 0;
 
-   document
+    beep(80);
+
+    document
       .getElementById("result")
       .textContent =
         "Wrong 😭";
   }
+
+  document
+    .getElementById("answer")
+    .value = "";
+
+  if(lives <= 0){
+
+    gameOver();
+
+  } else {
+
+    generate();
+  }
+
+  updateUI();
+};
+
+// ---------------- GAME OVER ----------------
+
+function gameOver(){
+
+  clearInterval(timer);
+
+  alert(
+    "Game Over 💀\n" +
+    "Final XP: " + xp
+  );
+
+  xp = 0;
+  level = 1;
+  lives = 3;
+  combo = 0;
+
+  updateUI();
+
+  generate();
+}
+
+// ---------------- UPDATE UI ----------------
+
+function updateUI(){
 
   document
     .getElementById("xp")
@@ -282,30 +454,26 @@ window.check = function(){
     .textContent = level;
 
   document
-    .getElementById("combo")
-    .textContent = combo;
-
-  document
     .getElementById("lives")
     .textContent = lives;
 
   document
-    .getElementById("answer")
-    .value = "";
+    .getElementById("combo")
+    .textContent = combo;
 
-  if(lives <= 0){
+  const percent =
+    (xp % 30) * 3.33;
 
-    alert("Game Over 💀");
+  document
+    .getElementById("barFill")
+    .style.width =
+      percent + "%";
+}
 
-    xp = 0;
-    level = 1;
-    combo = 0;
-    lives = 3;
-  }
-
-  generate();
-};
+// ---------------- START GAME ----------------
 
 generate();
+
+updateUI();
 
 };
