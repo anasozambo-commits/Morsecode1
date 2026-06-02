@@ -401,17 +401,6 @@ input::placeholder {
     0 0 25px #00f7ff,
     0 0 35px #ff00aa;
 }
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 footer {
 
   margin: 40px auto 20px;
