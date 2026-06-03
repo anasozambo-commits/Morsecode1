@@ -150,10 +150,11 @@ window.playMorse = async function(){
       await wait(1000);
     }
 
-    if(symbol === " "){
+    else if(symbol === " "){
 
-      await wait(2000)
-  }
+      await wait(2000) 
+    }
+   }
 };
 
 // ---------------- PLAY LETTER ----------------
