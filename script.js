@@ -204,6 +204,17 @@ let combo = 0;
 let answer = "";
 let timer;
 let time = 20;
+  window.startGame = function(){
+
+  xp = 0;
+  level = 1;
+  lives = 3;
+  combo = 0;
+
+  updateUI();
+
+  generate();
+};
 
 // ---------------- RANDOM LETTER ----------------
 
