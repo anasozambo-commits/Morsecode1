@@ -152,7 +152,7 @@ window.playMorse = async function(){
 
     else if(symbol === " "){
 
-      await wait(400) 
+      await wait(350) 
     }
    }
 };
