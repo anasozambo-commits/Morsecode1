@@ -138,7 +138,7 @@ window.playMorse = async function(){
 
     if(symbol === "."){
 
-      beep(300);
+      beep(250);
 
       await wait(700);
     }
@@ -167,7 +167,7 @@ window.playLetter = async function(letter){
 
     if(symbol === "."){
 
-      beep(300);
+      beep(250);
 
       await wait(700);
     }
