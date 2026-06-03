@@ -138,16 +138,16 @@ window.playMorse = async function(){
 
     if(symbol === "."){
 
-      beep(100);
+      beep(150);
 
-      await wait(200);
+      await wait(250);
     }
 
     else if(symbol === "-"){
 
-      beep(300);
+      beep(450);
 
-      await wait(400);
+      await wait(650);
     }
   }
 };
@@ -162,16 +162,16 @@ window.playLetter = async function(letter){
 
     if(symbol === "."){
 
-      beep(100);
+      beep(150);
 
-      await wait(200);
+      await wait(250);
     }
 
     else if(symbol === "-"){
 
-      beep(300);
+      beep(450);
 
-      await wait(400);
+      await wait(650);
     }
   }
 };
@@ -472,7 +472,9 @@ function updateUI(){
 
 // ---------------- START GAME ----------------
 
-generate();
+document.getElementById("question")
+  .textContent =
+  "Click Start Game!";
 
 updateUI();
 
