@@ -138,21 +138,21 @@ window.playMorse = async function(){
 
     if(symbol === "."){
 
-      beep(250);
+      beep(200);
 
       await wait(700);
     }
 
     else if(symbol === "-"){
 
-      beep(800);
+      beep(700);
 
-      await wait(1000);
+      await wait(950);
     }
 
     else if(symbol === " "){
 
-      await wait(2000) 
+      await wait(1500) 
     }
    }
 };
