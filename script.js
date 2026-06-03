@@ -102,7 +102,7 @@ function beep(ms){
     const osc =
       ctx.createOscillator();
 
-    osc.frequency.value = 800;
+    osc.frequency.value = 600;
 
     osc.connect(ctx.destination);
 
@@ -138,21 +138,21 @@ window.playMorse = async function(){
 
     if(symbol === "."){
 
-      beep(200);
+      beep(300);
 
-      await wait(500);
+      await wait(700);
     }
 
     else if(symbol === "-"){
 
-      beep(450);
+      beep(800);
 
-      await wait(650);
+      await wait(1000);
     }
 
     if(symbol === " "){
 
-      await wait(1000)
+      await wait(2000)
   }
 };
 
@@ -166,16 +166,16 @@ window.playLetter = async function(letter){
 
     if(symbol === "."){
 
-      beep(200);
+      beep(300);
 
-      await wait(500);
+      await wait(700);
     }
 
     else if(symbol === "-"){
 
-      beep(450);
+      beep(800);
 
-      await wait(650);
+      await wait(1000);
     }
   }
 };
