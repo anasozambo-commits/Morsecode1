@@ -138,9 +138,9 @@ window.playMorse = async function(){
 
     if(symbol === "."){
 
-      beep(150);
+      beep(200);
 
-      await wait(250);
+      await wait(500);
     }
 
     else if(symbol === "-"){
@@ -149,6 +149,10 @@ window.playMorse = async function(){
 
       await wait(650);
     }
+
+    if(symbol === " "){
+
+      await wait(1000)
   }
 };
 
@@ -162,9 +166,9 @@ window.playLetter = async function(letter){
 
     if(symbol === "."){
 
-      beep(150);
+      beep(200);
 
-      await wait(250);
+      await wait(500);
     }
 
     else if(symbol === "-"){
